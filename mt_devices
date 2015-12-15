@@ -1,0 +1,40 @@
+CREATE TABLE mt.t_devices
+(
+	id BIGINT NOT NULL ENCODE delta,
+	system_id SMALLINT NOT NULL ENCODE delta,
+	device_name VARCHAR ENCODE lzo,
+	policy_id INTEGER ENCODE delta,
+	make VARCHAR(100) ENCODE lzo,
+	model VARCHAR(100) ENCODE lzo,
+	year SMALLINT ENCODE runlength,
+	netsuite_vehicle_id INTEGER ENCODE delta,
+	netsuite_policy_id INTEGER ENCODE delta,
+	disabled_at TIMESTAMP ENCODE runlength,
+	obd_vin VARCHAR(100) ENCODE lzo,
+	power_on_at DOUBLE PRECISION,
+	time_gap DOUBLE PRECISION ENCODE bytedict,
+	odometer REAL,
+	miles_gap DOUBLE PRECISION,
+	gps_miles_gap DOUBLE PRECISION,
+	extracted_at TIMESTAMP ENCODE bytedict,
+	disconnected_at INTEGER,
+	hardware INTEGER ENCODE runlength,
+	created_at TIMESTAMP ENCODE runlength
+)
+DISTSTYLE EVEN
+SORTKEY
+(
+	system_id,
+	policy_id,
+	id
+);
+
+ALTER TABLE mt.t_devices
+ADD CONSTRAINT t_devices_pkey
+PRIMARY KEY (id, system_id);
+
+
+copy mt.t_devices from 's3://himex-up-bigdata/pdi/multi_tennant/devices/v_devices' credentials 'aws_access_key_id=AKIAIWLQ7CW4FUUSIRXQ;aws_secret_access_key=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' delimiter',' COMPUPDATE ON gzip;
+
+
+
