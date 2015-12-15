@@ -34,7 +34,7 @@ ADD CONSTRAINT t_devices_pkey
 PRIMARY KEY (id, system_id);
 
 
-copy mt.t_devices from 's3://himex-up-bigdata/pdi/multi_tennant/devices/v_devices' credentials 'aws_access_key_id=AKIAIWLQ7CW4FUUSIRXQ;aws_secret_access_key=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' delimiter',' COMPUPDATE ON gzip;
+copy mt.t_devices from 's3://himex-up-bigdata/pdi/multi_tennant/devices/v_devices' credentials 'aws_access_key_id=x;aws_secret_access_key=x' delimiter',' COMPUPDATE ON gzip;
 
 
 
